@@ -22,7 +22,7 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   return new Date(value);
 }
 
 /**
@@ -37,7 +37,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+   return new Date(value);
 }
 
 
@@ -56,7 +56,10 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   if (date.getFullYear() % 4 !== 0 ) { return false;}
+   else if (date.getFullYear() % 100 !==0){ return true;}
+   else if (date.getFullYear() % 400 !== 0) return false;
+   else return true;
 }
 
 
@@ -76,7 +79,25 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+   let hours = endDate.getHours()- startDate.getHours(); 
+   let minutes = endDate.getMinutes()- startDate.getMinutes(); 
+   let seconds = endDate.getSeconds()- startDate.getSeconds(); 
+   let milliseconds = endDate.getMilliseconds()- startDate.getMilliseconds();
+   let result = new Date(2000, 1, 1,  hours,  minutes,  seconds,  milliseconds); 
+    
+   let options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    };
+
+   let convertDate = result.toLocaleString("ru", options);
+   milliseconds = `${milliseconds}`;
+ 
+   if (milliseconds.length === 1) {
+      milliseconds = '00' + milliseconds;
+   }
+   return convertDate + '.'+ milliseconds;
 }
 
 
@@ -94,7 +115,13 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+    let hours = date.getHours()-3;
+    let minute = date.getMinutes();
+    let res = Math.abs( 0.5 * (60 * hours -  11 * minute));
+    if ( res > 180) {
+       res = Math.abs(360 - res);
+    } 
+    return (res*Math.PI / 180);     
 }
 
 
