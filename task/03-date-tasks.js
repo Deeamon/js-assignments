@@ -79,25 +79,33 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   let hours = endDate.getHours()- startDate.getHours(); 
-   let minutes = endDate.getMinutes()- startDate.getMinutes(); 
-   let seconds = endDate.getSeconds()- startDate.getSeconds(); 
-   let milliseconds = endDate.getMilliseconds()- startDate.getMilliseconds();
-   let result = new Date(2000, 1, 1,  hours,  minutes,  seconds,  milliseconds); 
-    
-   let options = {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    };
-
-   let convertDate = result.toLocaleString("ru", options);
-   milliseconds = `${milliseconds}`;
+   let x = endDate-startDate;
  
-   if (milliseconds.length === 1) {
-      milliseconds = '00' + milliseconds;
-   }
-   return convertDate + '.'+ milliseconds;
+   let string = '';
+   let hours = Math.floor(x/3600000);
+   if (hours<10) string = string.concat('0');
+   string = string.concat(hours);
+   string = string.concat(':');
+
+   x = x%3600000;
+   let mins = Math.floor(x/60000);
+   if (mins<10) string = string.concat('0');
+   string = string.concat(mins);
+   string = string.concat(':');
+
+   x = x%60000;
+   let secs = Math.floor(x/1000);
+   if (secs<10) string = string.concat('0');
+   string = string.concat(secs);
+   string = string.concat('.');
+
+   x = x%1000;
+   let msecs = x;
+   if (msecs<10) string = string.concat('00');
+   else if (msecs<100) string = string.concat('0');
+   string = string.concat(msecs);
+
+   return string;
 }
 
 
