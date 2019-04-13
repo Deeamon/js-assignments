@@ -123,13 +123,13 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    let hours = date.getHours()-3;
-    let minute = date.getMinutes();
-    let res = Math.abs( 0.5 * (60 * hours -  11 * minute));
-    if ( res > 180) {
-       res = Math.abs(360 - res);
-    } 
-    return (res*Math.PI / 180);     
+   let hours = date.toGMTString().slice(17, 19);
+   let  minute = date.toGMTString().slice(20, 22);
+   let res = Math.abs( 0.5 * (60 * hours -  11 * minute));
+   while (res > 180){
+      res = Math.abs(360 - res);
+   }
+   return res*Math.PI/180;   
 }
 
 
