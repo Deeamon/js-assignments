@@ -443,7 +443,14 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
-   throw new Error('Not implemented');
+   return arr.sort((a,b) => {
+      if(a.country == b.country ){
+         if( a.city > b.city) return 1;
+         else return -1;
+      }
+      if( a.country > b.country) return 1;
+      else return -1;
+   });
 }
 
 /**
@@ -465,11 +472,10 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]   
  */
 function getIdentityMatrix(n) {
-   let arr = Array.from(Array(n), (value, i) => Array.from(Array(n), (value, j) => {
+   return  Array.from(Array(n), (value, i) => Array.from(Array(n), (value, j) => {
       if (i === j) return 1;
       else return 0;
-   }))
-   return arr;
+   }));
 }
 
 /**
@@ -536,7 +542,16 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-   throw new Error('Not implemented');
+   let setCountry = new Set(array.map( item => item[Object.keys(item)[0]]));
+   let sortCity = [];
+
+   [...setCountry].map ( i => {
+      let a = array.filter( item => keySelector(item) == i).map(item => valueSelector(item));
+      sortCity.push([i, a]);
+
+   });
+
+   return new Map(sortCity);
 }
 
 
@@ -569,7 +584,8 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-    throw new Error('Not implemented');
+   indexes.map((item) => arr = arr[item]);
+   return arr;
 }
 
 
