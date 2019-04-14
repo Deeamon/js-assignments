@@ -26,7 +26,14 @@
  *
  */
 function getComposition(f,g) {
-    throw new Error('Not implemented');
+
+    let compose = function(func1, func2){
+        return function(value){
+            return func1(func2(value));
+        }
+    }
+    return compose(f, g);
+    
 }
 
 
